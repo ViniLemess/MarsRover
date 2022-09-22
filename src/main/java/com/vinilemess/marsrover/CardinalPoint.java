@@ -7,6 +7,7 @@ public enum CardinalPoint {
     SOUTH("S");
 
     private final String cardinalDirection;
+
     CardinalPoint(String cardinalDirection) {
         this.cardinalDirection = cardinalDirection;
     }
