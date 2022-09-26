@@ -14,21 +14,22 @@ public class MarsRover {
 
     public String executeCommand(String command) {
         for (char character : command.toCharArray()) {
-           moveRover(character);
+            switch (String.valueOf(character)) {
+                case "M" -> moveRover();
+                case "R" -> turnRight();
+                case "L" -> turnLeft();
+                default -> throw new IllegalArgumentException(String.format("Invalid command: %s", character));
+            }
         }
-        return printCurrentPosition();
+        return getCurrentPosition();
     }
 
-    private void moveRover(char character) {
-        if (character == "M".charAt(0)) switch (this.direction.getCardinalDirection()) {
-            case "S" -> moveSouth();
-            case "N" -> moveNorth();
-            case "E" -> moveEast();
-            case "W" -> moveWest();
-        } else if (character == "R".charAt(0)) {
-            turnRight();
-        } else if (character == "L".charAt(0)) {
-            turnLeft();
+    private void moveRover() {
+         switch (this.direction) {
+            case SOUTH -> moveSouth();
+            case NORTH -> moveNorth();
+            case EAST -> moveEast();
+            case WEST -> moveWest();
         }
     }
 
@@ -65,33 +66,33 @@ public class MarsRover {
     }
 
     private void turnLeft() {
-        switch (this.direction.getCardinalDirection()) {
-            case "N" -> this.direction = CardinalPoint.WEST;
-            case "W" -> this.direction = CardinalPoint.SOUTH;
-            case "S" -> this.direction = CardinalPoint.EAST;
-            case "E" -> this.direction = CardinalPoint.NORTH;
+        switch (this.direction) {
+            case NORTH -> this.direction = CardinalPoint.WEST;
+            case WEST -> this.direction = CardinalPoint.SOUTH;
+            case SOUTH -> this.direction = CardinalPoint.EAST;
+            case EAST -> this.direction = CardinalPoint.NORTH;
         }
     }
 
     private void turnRight() {
-        switch (this.direction.getCardinalDirection()) {
-            case "N" -> this.direction = CardinalPoint.EAST;
-            case "E" -> this.direction = CardinalPoint.SOUTH;
-            case "S" -> this.direction = CardinalPoint.WEST;
-            case "W" -> this.direction = CardinalPoint.NORTH;
+        switch (this.direction) {
+            case NORTH -> this.direction = CardinalPoint.EAST;
+            case EAST -> this.direction = CardinalPoint.SOUTH;
+            case SOUTH -> this.direction = CardinalPoint.WEST;
+            case WEST -> this.direction = CardinalPoint.NORTH;
         }
     }
 
     private void invertDirection() {
-        switch (this.direction.getCardinalDirection()) {
-            case "N" -> this.direction = CardinalPoint.SOUTH;
-            case "E" -> this.direction = CardinalPoint.WEST;
-            case "S" -> this.direction = CardinalPoint.NORTH;
-            case "W" -> this.direction = CardinalPoint.EAST;
+        switch (this.direction) {
+            case NORTH -> this.direction = CardinalPoint.SOUTH;
+            case EAST -> this.direction = CardinalPoint.WEST;
+            case SOUTH -> this.direction = CardinalPoint.NORTH;
+            case WEST -> this.direction = CardinalPoint.EAST;
         }
     }
 
-    public String printCurrentPosition() {
+    public String getCurrentPosition() {
         return "%d:%d:%s".formatted(coordinateX, coordinateY, direction.getCardinalDirection());
     }
 }

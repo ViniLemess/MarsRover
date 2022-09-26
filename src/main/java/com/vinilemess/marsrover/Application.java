@@ -11,7 +11,12 @@ public class Application {
             System.out.println("Command the Mars Rover: (type Q to finish the program)");
             String command = scanner.next().toUpperCase();
             if (command.equals("Q")) break;
-            System.out.println(marsRover.executeCommand(command));
+            try {
+                System.out.println(marsRover.executeCommand(command));
+            } catch (IllegalArgumentException exception) {
+                System.err.println(exception.getMessage());
+            }
+
         }
         System.out.println("Program finished");
     }
